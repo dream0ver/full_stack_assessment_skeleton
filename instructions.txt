@@ -1,0 +1,2 @@
+START : docker-compose -f docker-compose.final.yml up --build -d 
+END : docker-compose -f docker-compose.final.yml down -v 

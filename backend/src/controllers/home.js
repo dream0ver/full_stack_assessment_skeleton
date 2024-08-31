@@ -1,3 +1,4 @@
+const { In } = require("typeorm");
 const { AppDataSource } = require("../data-source")
 const interestsRepository = AppDataSource.getRepository("Interests");
 const homeRepository = AppDataSource.getRepository("Home")
@@ -8,16 +9,27 @@ const findByUser = async (req, res) => {
     if (!user_id) {
         res.status(400).json({ msg: "Missing required params user_id" })
     }
-    const homes = await interestsRepository.find({
-        // take: 50,
-        // skip: 50 * (page - 1),
+    let valid_homes = await interestsRepository.find({
         where: {
-            user_id,
+            user_id
         }
     })
+    valid_homes = valid_homes.map((home) => home.home_id)
+    const homes = await homeRepository.find({
+        take: 50,
+        skip: 50 * (page - 1),
+        where: {
+            home_id: In(valid_homes),
+        }
+    })
+    const totalCount = await homeRepository.count({
+        where: {
+            home_id: In(valid_homes),
+        }
+    });
     res.json({
         homes,
-        totalCount: homes.length
+        totalCount
     })
 }
 

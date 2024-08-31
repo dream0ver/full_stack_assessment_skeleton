@@ -1,17 +1,26 @@
 import { useQuery } from "@tanstack/react-query"
+import { fetchHomesByUserId } from "../../api/api"
 import styles from "./Card.module.css"
-import { fetchAllUsers, fetchHomesByUserId } from "../../api/api"
 
-export default function Card({ info }) {
+export default function Card({
+  baths,
+  beds,
+  home_id,
+  list_price,
+  sqft,
+  state,
+  street_address,
+  zip,
+}) {
   return (
-    <section className={styles.container}>
-      <h1>House Title</h1>
-      <span>List Price : </span>
-      <span>State : </span>
-      <span>Zip : </span>
-      <span>Sqft : </span>
-      <span>Beds : </span>
-      <span>Baths : </span>
+    <section className={styles.container} key={home_id}>
+      <h2 title={street_address}>{street_address}</h2>
+      <span>List Price : {list_price}</span>
+      <span>State : {state}</span>
+      <span>Zip : {zip}</span>
+      <span>Sqft : {sqft}</span>
+      <span>Beds : {beds}</span>
+      <span>Baths : {baths}</span>
       <button>Edit Users</button>
     </section>
   )
@@ -27,7 +36,11 @@ export function Cards({ user }) {
 
   if (error) return "An error has occurred: " + error.message
 
-  if (data) console.log(data)
-
-  return <div></div>
+  return (
+    <div className="card-container">
+      {Array.isArray(data?.homes)
+        ? data.homes.map(home => <Card {...home} />)
+        : "Nothing to show."}
+    </div>
+  )
 }
