@@ -12,7 +12,7 @@ const findAll = async (req, res) => {
 }
 
 const findByHome = async (req, res) => {
-    const { home_id } = req.body
+    const { home_id } = req.query
     if (!home_id) {
         res.status(400).json({ msg: "Missing required param home_id" })
     }

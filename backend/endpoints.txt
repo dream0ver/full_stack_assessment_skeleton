@@ -1,0 +1,18 @@
+GET
+localhost:3100/user/find-all
+localhost:3100/home/find-by-user?user_id=2&page=1
+localhost:3100/user/find-by-home?home_id=2
+
+POST
+localhost:3100/home/update-users
+
+
+
+SELECT * 
+FROM home 
+WHERE home_id IN (
+    SELECT home_id 
+    FROM interests 
+    WHERE user_id = 2
+) 
+
