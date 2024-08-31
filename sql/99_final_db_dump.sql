@@ -35,6 +35,7 @@ FROM user_home;
 CREATE TABLE interests (
     user_id INT NOT NULL,
     home_id INT NOT NULL,
+    PRIMARY KEY (user_id, home_id),
     FOREIGN KEY (user_id) REFERENCES user(user_id),
     FOREIGN KEY (home_id) REFERENCES home(home_id)
 );
