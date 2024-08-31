@@ -130,6 +130,19 @@ docker-compose -f docker-compose.initial.yml up --build -d
 ### solution
 
 > explain briefly your solution for this problem here
+  - I’ve created separate tables for user and home to store unique records for each category.
+
+  - I introduced a new column, user_id, as an auto-incrementing integer and the primary key in the user table. 
+    This change facilitates easier scaling of the database in the future, especially if we need to edit usernames.
+
+  - Similarly, I added a home_id column in the home table as the primary key to support future scaling if needed.
+
+  - I copied distinct records from the user_home table into the user and home tables accordingly.
+
+  - I created a new table called interests which is used to track the many-to-many relation between user and home and copied the 
+    records from user_home (Made use of joins to copy the id's of records from user and home table since those are primary keys in their respective tables.)
+    
+  - Finally, for simplicity, I dropped the user_home table.
 
 ## 2. React SPA
 
