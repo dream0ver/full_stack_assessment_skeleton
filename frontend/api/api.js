@@ -7,7 +7,6 @@ export const fetchAllUsers = () => {
 }
 
 export const editUsers = ({ interestedBy = [], interestedByInitial = [], home_id }) => {
-    if (JSON.stringify(interestedBy.toSorted()) == JSON.stringify(interestedByInitial.toSorted())) return
     return fetch(baseUrl + "/home/update-users", {
         method: "PATCH",
         body: JSON.stringify({

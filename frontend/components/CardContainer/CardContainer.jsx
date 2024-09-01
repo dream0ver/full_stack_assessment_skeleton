@@ -29,19 +29,25 @@ export default function CardContainer() {
 
   useEffect(() => fetchHomes(), [selectedUser])
 
-  const onSave = async () => {
+  const onSave = () => {
     if (interestedBy < 1) return toast.error("Please select atleast one user")
-    try {
-      await editUsers({
-        interestedBy,
-        interestedByInitial,
-        home_id: selectedHome?.home_id,
+    if (
+      JSON.stringify(interestedBy.toSorted()) ==
+      JSON.stringify(interestedByInitial.toSorted())
+    )
+      return toast.info("Make some changes before saving")
+    editUsers({
+      interestedBy,
+      interestedByInitial,
+      home_id: selectedHome?.home_id,
+    })
+      ?.then(res => {
+        fetchHomes()
+        dispatch(toggleModal(false))
       })
-      dispatch(toggleModal(false))
-      fetchHomes()
-    } catch (err) {
-      console.error("Error occurred while editing users.")
-    }
+      .catch(err => {
+        console.error("Error occurred while editing users.")
+      })
   }
 
   return (

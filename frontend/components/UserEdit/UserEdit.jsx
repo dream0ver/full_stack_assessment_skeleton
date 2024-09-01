@@ -38,13 +38,15 @@ export default function UserEdit() {
         {users.map(user => (
           <li key={user.user_id}>
             <input
+              id={`checkbox_${user.user_id}`}
               type="checkbox"
               checked={interestedBy.includes(user.user_id)}
               onChange={e => onCheck(e, user.user_id)}
-            />
-            &nbsp;
-            {user.username +
-              `${user.user_id == selectedUser ? " (Current User)" : ""}`}
+            />{" "}
+            <label for={`checkbox_${user.user_id}`}>
+              {user.username +
+                `${user.user_id == selectedUser ? " (Current User)" : ""}`}
+            </label>
           </li>
         ))}
       </ul>
