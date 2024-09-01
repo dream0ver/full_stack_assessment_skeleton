@@ -9,6 +9,11 @@ services:
       MYSQL_DATABASE: home_db
       MYSQL_USER: db_user
       MYSQL_PASSWORD: 6equj5_db_user
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - mysql_vol_2:/var/lib/mysql:rw
     ports:
@@ -43,6 +48,9 @@ services:
       DB_USER_PASSWORD: 6equj5_db_user
       DB_PORT: 3306
       DB_HOST: mysql_ctn_final
+    depends_on:
+      mysql_ctn_final:
+        condition: service_healthy
     ports:
       - 3100:3100
     networks:

@@ -7,7 +7,7 @@ const { AppDataSource } = require("./src/data-source")
 async function init() {
     try {
         await AppDataSource.initialize()
-        console.log("Data Source has been initialized!");
+        console.log("Data Source has been initialized, Ready to accept request.");
         app.listen(PORT, () => console.log(`Express server running on port ${PORT}.`))
     } catch (err) {
         console.error("Error during Data Source initialization: Restarting service please wait.");

@@ -1,7 +1,11 @@
-In the root of the directory execute the following command, It will automatically build and launch frontend, backend, database applications.
-Give it 2 minutes to fully start then head on to localhost:3000 to interact with running application.
+To build and launch the frontend, backend, and database applications, run the following command from the root directory:
 
 docker-compose -f docker-compose.final.yml up --build -d 
+
+Wait for about one minute for the services to fully start. 
+Once you see the log "Data Source has been initialized, Ready to accept request" in the logs, the setup is complete. 
+You can then access the running application at localhost:3000.
+
 
 Use below command to shutdown and remove volume of the running containers
 
