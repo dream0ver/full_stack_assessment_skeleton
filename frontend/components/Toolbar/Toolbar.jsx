@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchAllUsers } from "../../api/api"
 import { setUsers } from "../../src/features/usersSlice"
-import { setUser } from "../../src/features/currentUserSlice"
+import { setSelectedUser } from "../../src/features/currentUserSlice"
 
 export default function Toolbar() {
   useEffect(() => {
@@ -20,13 +20,11 @@ export default function Toolbar() {
         <label>Select User: </label>
         <select
           onChange={e => {
-            dispatch(setUser(e.target.value))
+            dispatch(setSelectedUser(e.target.value))
           }}
           value={selectedUser}
         >
-          <option value="" disabled>
-            Please Select
-          </option>
+          <option value="">Please Select</option>
           {users.map(user => (
             <option value={user.user_id} key={user.user_id}>
               {user.username}

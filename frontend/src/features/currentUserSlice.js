@@ -10,8 +10,12 @@ export const currentUserSlice = createSlice({
     name: 'currentUserSlice',
     initialState,
     reducers: {
-        setUser: (state, action) => {
+        setSelectedUser: (state, action) => {
             state.selectedUser = action.payload
+            if (!action.payload) {
+                state.homesIntrested = []
+                state.homesIntrestedTotalCount = 0
+            }
         },
         setHomesIntrested: (state, action) => {
             state.homesIntrested = action.payload.homes
@@ -20,6 +24,6 @@ export const currentUserSlice = createSlice({
     },
 })
 
-export const { setUser, setHomesIntrested } = currentUserSlice.actions
+export const { setSelectedUser, setHomesIntrested } = currentUserSlice.actions
 
 export default currentUserSlice.reducer

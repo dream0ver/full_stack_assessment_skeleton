@@ -11,6 +11,7 @@
   border: 0;
   border-radius: 16px;
   padding: 8px;
+  min-width: 60px;
   cursor: pointer;
   font-weight: bold;
 }
@@ -18,4 +19,7 @@
   background-color: blue;
   border: 1px solid blue;
   color: white;
+}
+.modal-open {
+  overflow: hidden;
 }

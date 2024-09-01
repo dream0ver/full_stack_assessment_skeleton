@@ -1,16 +1,19 @@
+import { toggleModal } from "../../src/features/modalSlice"
+import { setSelectedHome } from "../../src/features/currentHomeSlice"
+import { useDispatch } from "react-redux"
 import "./Card.css"
 
 export default function Card({
   baths,
   beds,
-  home_id,
   list_price,
   sqft,
   state,
   street_address,
   zip,
-  setShowPopup,
+  home_id,
 }) {
+  const dispatch = useDispatch()
   return (
     <section className="card">
       <h2 title={street_address}>{street_address}</h2>
@@ -20,7 +23,13 @@ export default function Card({
       <span>Sqft : {sqft}</span>
       <span>Beds : {beds}</span>
       <span>Baths : {baths}</span>
-      <button className="btn primary" onClick={() => setShowPopup(true)}>
+      <button
+        className="btn primary"
+        onClick={() => {
+          dispatch(toggleModal(true))
+          dispatch(setSelectedHome({ home_id, street_address }))
+        }}
+      >
         Edit Users
       </button>
     </section>
