@@ -1,21 +1,18 @@
-import { useDispatch, useSelector } from "react-redux"
-import { setAllUsers, setSelectedUser } from "../../src/features/stateSlice"
 import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { fetchAllUsers } from "../../api/api"
+import { setUsers } from "../../src/features/usersSlice"
+import { setUser } from "../../src/features/currentUserSlice"
 
 export default function Toolbar() {
   useEffect(() => {
     fetchAllUsers().then(res => {
-      dispatch(
-        setAllUsers({
-          allUsers: res.users,
-          allUsersCount: res.totalCount,
-        })
-      )
+      dispatch(setUsers(res))
     })
   }, [])
 
-  const stateSlice = useSelector(state => state.stateSlice)
+  const { users } = useSelector(state => state.usersSlice)
+  const { selectedUser } = useSelector(state => state.currentUserSlice)
   const dispatch = useDispatch()
   return (
     <section>
@@ -23,14 +20,14 @@ export default function Toolbar() {
         <label>Select User: </label>
         <select
           onChange={e => {
-            dispatch(setSelectedUser(e.target.value))
+            dispatch(setUser(e.target.value))
           }}
-          value={stateSlice.user}
+          value={selectedUser}
         >
           <option value="" disabled>
             Please Select
           </option>
-          {stateSlice.allUsers.map(user => (
+          {users.map(user => (
             <option value={user.user_id} key={user.user_id}>
               {user.username}
             </option>

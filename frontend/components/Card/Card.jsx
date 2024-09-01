@@ -12,7 +12,7 @@ export default function Card({
   setShowPopup,
 }) {
   return (
-    <section className="card" key={home_id}>
+    <section className="card">
       <h2 title={street_address}>{street_address}</h2>
       <span>List Price : {list_price}</span>
       <span>State : {state}</span>
