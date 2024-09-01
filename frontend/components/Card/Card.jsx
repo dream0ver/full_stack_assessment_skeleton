@@ -26,8 +26,8 @@ export default function Card({
       <button
         className="btn primary"
         onClick={() => {
-          dispatch(toggleModal(true))
           dispatch(setSelectedHome({ home_id, street_address }))
+          dispatch(toggleModal(true))
         }}
       >
         Edit Users

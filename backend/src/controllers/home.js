@@ -35,7 +35,11 @@ const findByUser = async (req, res) => {
 
 
 const updateUsers = async (req, res) => {
-    res.json({})
+    const { interestedBy, interestedByInitial, home_id } = req.body
+    const added = interestedBy.filter((i) => !interestedByInitial.includes(i))
+    const removed = interestedByInitial.filter((i) => !interestedBy.includes(i))
+
+    res.json({ msg: "Successfully updated the users." })
 }
 
 module.exports = {

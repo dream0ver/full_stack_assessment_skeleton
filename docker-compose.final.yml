@@ -15,23 +15,8 @@ services:
       - 3306:3306
     networks:
       - app_net_2
-    healthcheck:
-      test:
-        [
-          "CMD",
-          "mysqladmin",
-          "ping",
-          "-h",
-          "localhost",
-          "-u",
-          "root",
-          "-p6equj5_root",
-        ]
-      interval: 30s
-      retries: 5
-      start_period: 30s
-      timeout: 10s
   # Below container runs the frontend application at localhost:3000
+
   # frontend:
   #   build:
   #     context: ./frontend
@@ -41,27 +26,26 @@ services:
   #     VITE_API_BASE_URL: http://localhost:3100
   #   ports:
   #     - 3000:3000
+
   # Below container runs the backend application at localhost:3100
-  backend:
-    build:
-      context: ./backend
-      dockerfile: ./Dockerfile
-    container_name: backend
-    depends_on:
-      mysql_ctn_final:
-        condition: service_healthy
-    restart: always
-    environment:
-      PORT: 3100
-      DB_USER_NAME: db_user
-      DB_NAME: home_db
-      DB_USER_PASSWORD: 6equj5_db_user
-      DB_PORT: 3306
-      DB_HOST: mysql_ctn_final
-    ports:
-      - 3100:3100
-    networks:
-      - app_net_2
+
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: ./Dockerfile
+  #   container_name: backend
+  #   restart: always
+  #   environment:
+  #     PORT: 3100
+  #     DB_USER_NAME: db_user
+  #     DB_NAME: home_db
+  #     DB_USER_PASSWORD: 6equj5_db_user
+  #     DB_PORT: 3306
+  #     DB_HOST: mysql_ctn_final
+  #   ports:
+  #     - 3100:3100
+  #   networks:
+  #     - app_net_2
 
 networks:
   app_net_2:
