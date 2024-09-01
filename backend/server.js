@@ -4,12 +4,14 @@ const PORT = process.env.PORT
 const app = require("./src/app")
 const { AppDataSource } = require("./src/data-source")
 
-AppDataSource.initialize()
-    .then(() => {
+async function init() {
+    try {
+        await AppDataSource.initialize()
         console.log("Data Source has been initialized!");
-    })
-    .catch((err) => {
+        app.listen(PORT, () => console.log(`Express server running on port ${PORT}.`))
+    } catch (err) {
         console.error("Error during Data Source initialization:", err);
-    });
+    }
+}
+init()
 
-app.listen(PORT, () => console.log(`Express server running on port ${PORT}.`))

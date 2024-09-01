@@ -6,7 +6,7 @@ export const fetchAllUsers = () => {
     )
 }
 
-export const fetchHomesByUserId = (user_id) => {
+export const fetchHomesByUserId = (user_id = null) => {
     if (!user_id) return null
     return fetch(baseUrl + `/home/find-by-user?user_id=${user_id}`).then((res) => res.json())
 }
