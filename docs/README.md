@@ -1,3 +1,22 @@
+# Instructions to run 
+
+- I have created dockerfile for both frontend and backend application and added it to the final compose file.
+
+- To build and launch the frontend, backend, and database applications, run the following command from the root directory.
+
+```bash
+docker-compose -f docker-compose.final.yml up --build -d 
+
+```
+
+- Wait for about one minute for the services to fully start, You can then access the running application at localhost:3000.
+
+- Use below command to shutdown and remove volume of the running containers.
+
+```bash
+docker-compose -f docker-compose.final.yml down -v 
+```
+
 # Introduction - how to read this doc
 
 - This exercise is designed to test basic skills in 3 core areas:
@@ -141,7 +160,9 @@ docker-compose -f docker-compose.initial.yml up --build -d
 
   - I created a new table called interests which is used to track the many-to-many relation between user and home and copied the 
     records from user_home (Made use of joins to copy the id's of records from user and home table since those are primary keys in their respective tables.)
-    
+  
+  - I used this VS Code extention called "Database Client" as a GUI client.
+
   - Finally, for simplicity, I dropped the user_home table.
 
 ## 2. React SPA
@@ -235,6 +256,28 @@ docker-compose -f docker-compose.initial.yml up --build -d
 
 > explain briefly your solution for this problem here
 
+- As mentioned, I have created the React application using Vite.
+
+- Created reusable Card component which is used to display different home cards.
+
+- Created reusable Popup component which takes children and displays inside the modal.
+
+- I have implemented all the functionalities mentioned in the requirements, as well as additional functionality (pagination and caching).
+
+- I have chosen Redux Toolkit for state management. Using this, I tracked states such as the selected user, current page, and home checkbox selection.
+
+- The page is responsive and adapts to different screen sizes.
+
+- Checkboxes are controlled using the Redux state.
+
+- I used RTK-Query to make API calls and implemented caching and cache invalidation of responses accordingly.
+
+- I used vanilla CSS for styling and created a style file for each component.
+
+- I used the Toaster package to display appropriate toast messages in case of errors.
+
+- I have created docker file for this frontend app and added it to compose file, After running the compose files it will be available on localhost:3000
+
 ## 3. Backend API development on Node
 
 ### problem
@@ -295,6 +338,22 @@ docker-compose -f docker-compose.initial.yml up --build -d
 ### solution
 
 > explain briefly your solution for this problem here
+
+- I went with Express to create REST API as i don't have prior experience with NestJS.
+
+- Implemented all the required API using appropriate http methods.
+
+- I have also implemented pagination functionality.
+
+- I have used TypeORM for interacting with the DB, Created User, Home and Interests entities to interact with respective tables.
+
+- I have used MVC pattern Models (TypeORM entities) are stored in entities folder and Controllers are stored in the Controllers folder.
+
+- I have created 2 different routes for the REST API'S (/user and /home) using express router.
+
+- I have created dockerfile for the backend app and added it to the compose file, It will automatically run when final compose is started.
+
+- I have added basic validation in all the API's
 
 ## Submission Guidelines
 
