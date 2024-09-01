@@ -39,7 +39,6 @@ export default function UserEdit() {
           <li key={user.user_id}>
             <input
               type="checkbox"
-              disabled={user.user_id == selectedUser}
               checked={interestedBy.includes(user.user_id)}
               onChange={e => onCheck(e, user.user_id)}
             />

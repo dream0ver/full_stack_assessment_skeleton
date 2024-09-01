@@ -7,6 +7,7 @@ import Popup from "../Popup/Popup"
 import UserEdit from "../UserEdit/UserEdit"
 import { toggleModal } from "../../src/features/modalSlice"
 import { clearHomeSlice } from "../../src/features/currentHomeSlice"
+import { toast } from "react-toastify"
 
 export default function CardContainer() {
   const dispatch = useDispatch()
@@ -29,6 +30,7 @@ export default function CardContainer() {
   useEffect(() => fetchHomes(), [selectedUser])
 
   const onSave = async () => {
+    if (interestedBy < 1) return toast.error("Please select atleast one user")
     try {
       await editUsers({
         interestedBy,
