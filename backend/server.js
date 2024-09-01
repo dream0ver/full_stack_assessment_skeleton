@@ -10,7 +10,7 @@ async function init() {
         console.log("Data Source has been initialized!");
         app.listen(PORT, () => console.log(`Express server running on port ${PORT}.`))
     } catch (err) {
-        console.error("Error during Data Source initialization:", err);
+        console.error("Error during Data Source initialization: Restarting service please wait.");
     }
 }
 init()

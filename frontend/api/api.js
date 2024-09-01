@@ -10,8 +10,8 @@ export const api = createApi({
             transformResponse: (response) => response.users
         }),
         getHomesByUserId: builder.query({
-            query: (user_id) => {
-                return `home/find-by-user?user_id=${user_id}`
+            query: ({ user_id, page }) => {
+                return `home/find-by-user?user_id=${user_id}&page=${page}`
             },
             providesTags: ['getHomesByUserId'],
         }),

@@ -16,13 +16,17 @@ export default function CardContainer() {
 
   const { isModalOpen } = useSelector(state => state.modalSlice)
   const { selectedUser } = useSelector(state => state.currentUserSlice)
+  const { page } = useSelector(state => state.filterSlice)
   const { selectedHome, interestedBy } = useSelector(
     state => state.currentHomeSlice
   )
   const { data: { homes: homesByUserId } = { homes: [] } } =
-    useGetHomesByUserIdQuery(selectedUser, {
-      skip: !selectedUser,
-    })
+    useGetHomesByUserIdQuery(
+      { user_id: selectedUser, page },
+      {
+        skip: !selectedUser,
+      }
+    )
 
   const { data: usersByHome } = useGetUsersByHomeIdQuery(
     selectedHome?.home_id,
