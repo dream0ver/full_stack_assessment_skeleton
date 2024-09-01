@@ -1,9 +1,13 @@
-START : docker-compose -f docker-compose.final.yml up --build -d 
-END : docker-compose -f docker-compose.final.yml down -v 
+In the root of the directory execute the following command, It will automatically build and launch frontend, backend, database applications.
+Give it 2 minutes to fully start then head on to localhost:3000 to interact with running application.
+
+docker-compose -f docker-compose.final.yml up --build -d 
+
+Use below command to shutdown and remove volume of the running containers
+
+docker-compose -f docker-compose.final.yml down -v 
 
 
 
 
 
-rtk-query
-pagination

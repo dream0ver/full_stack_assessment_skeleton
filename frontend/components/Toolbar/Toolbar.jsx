@@ -1,17 +1,9 @@
-import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { fetchAllUsers } from "../../api/api"
-import { setUsers } from "../../src/features/usersSlice"
+import { useGetAllUsersQuery } from "../../api/api"
 import { setSelectedUser } from "../../src/features/currentUserSlice"
 
 export default function Toolbar() {
-  useEffect(() => {
-    fetchAllUsers().then(res => {
-      dispatch(setUsers(res))
-    })
-  }, [])
-
-  const { users } = useSelector(state => state.usersSlice)
+  const { data: allUsers } = useGetAllUsersQuery()
   const { selectedUser } = useSelector(state => state.currentUserSlice)
   const dispatch = useDispatch()
   return (
@@ -25,7 +17,7 @@ export default function Toolbar() {
           value={selectedUser}
         >
           <option value="">Please Select</option>
-          {users.map(user => (
+          {allUsers?.map(user => (
             <option value={user.user_id} key={user.user_id}>
               {user.username}
             </option>

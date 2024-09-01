@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     selectedHome: "",
-    interestedByInitial: [],
     interestedBy: []
 }
 
@@ -13,21 +12,12 @@ export const currentHomeSlice = createSlice({
         setSelectedHome: (state, action) => {
             state.selectedHome = { ...action.payload }
         },
-        setHomeInrestedBy: (state, action) => {
-            state.interestedByInitial = action.payload
+        setInterestedBy: (state, action) => {
             state.interestedBy = action.payload
         },
-        mutateInrestedBy: (state, action) => {
-            state.interestedBy = action.payload
-        },
-        clearHomeSlice: (state, action) => {
-            state.selectedHome = ""
-            state.interestedByInitial = []
-            state.interestedBy = []
-        }
     },
 })
 
-export const { setSelectedHome, setHomeInrestedBy, mutateInrestedBy, clearHomeSlice } = currentHomeSlice.actions
+export const { setSelectedHome, setInterestedBy } = currentHomeSlice.actions
 
 export default currentHomeSlice.reducer

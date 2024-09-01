@@ -1,60 +1,61 @@
-import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { editUsers, fetchHomesByUserId } from "../../api/api"
-import { setHomesIntrested } from "../../src/features/currentUserSlice"
+import { toast } from "react-toastify"
+import {
+  useEditUsersMutation,
+  useGetHomesByUserIdQuery,
+  useGetUsersByHomeIdQuery,
+} from "../../api/api"
+import { toggleModal } from "../../src/features/modalSlice"
 import Card from "../Card/Card"
 import Popup from "../Popup/Popup"
 import UserEdit from "../UserEdit/UserEdit"
-import { toggleModal } from "../../src/features/modalSlice"
-import { clearHomeSlice } from "../../src/features/currentHomeSlice"
-import { toast } from "react-toastify"
 
 export default function CardContainer() {
   const dispatch = useDispatch()
+  const [editUsers] = useEditUsersMutation()
 
   const { isModalOpen } = useSelector(state => state.modalSlice)
-  const { selectedUser, homesIntrested } = useSelector(
-    state => state.currentUserSlice
-  )
-  const { selectedHome, interestedBy, interestedByInitial } = useSelector(
+  const { selectedUser } = useSelector(state => state.currentUserSlice)
+  const { selectedHome, interestedBy } = useSelector(
     state => state.currentHomeSlice
   )
-
-  const fetchHomes = () => {
-    fetchHomesByUserId(selectedUser)?.then(res => {
-      dispatch(setHomesIntrested(res))
-      dispatch(clearHomeSlice())
+  const { data: { homes: homesByUserId } = { homes: [] } } =
+    useGetHomesByUserIdQuery(selectedUser, {
+      skip: !selectedUser,
     })
-  }
 
-  useEffect(() => fetchHomes(), [selectedUser])
+  const { data: usersByHome } = useGetUsersByHomeIdQuery(
+    selectedHome?.home_id,
+    {
+      skip: !selectedHome?.home_id,
+    }
+  )
 
   const onSave = () => {
-    if (interestedBy < 1) return toast.error("Please select atleast one user")
-    if (
-      JSON.stringify(interestedBy.toSorted()) ==
-      JSON.stringify(interestedByInitial.toSorted())
-    )
-      return toast.info("Make some changes before saving")
+    if (interestedBy < 1) return toast.error("Please select atleast one user.")
+    if (interestedBy.toSorted().toString() == usersByHome.toSorted().toString())
+      return toast.info("Make some changes before saving.")
+
     editUsers({
-      interestedBy,
-      interestedByInitial,
+      latest: interestedBy,
+      initial: usersByHome,
       home_id: selectedHome?.home_id,
     })
-      ?.then(res => {
-        fetchHomes()
+      .unwrap()
+      .then(res => {
+        toast.success(res.msg)
         dispatch(toggleModal(false))
       })
       .catch(err => {
-        console.error("Error occurred while editing users.")
+        console.error("Error occurred while editing users.", err)
       })
   }
 
   return (
     <>
       <div className="card-container">
-        {homesIntrested.length > 0
-          ? homesIntrested.map(home => <Card key={home.home_id} {...home} />)
+        {!!homesByUserId?.length
+          ? homesByUserId?.map(home => <Card key={home.home_id} {...home} />)
           : "Nothing to show."}
       </div>
       <Popup isOpen={isModalOpen} onSave={onSave}>
