@@ -38,8 +38,19 @@ const updateUsers = async (req, res) => {
     const { interestedBy, interestedByInitial, home_id } = req.body
     const added = interestedBy.filter((i) => !interestedByInitial.includes(i))
     const removed = interestedByInitial.filter((i) => !interestedBy.includes(i))
-
-    res.json({ msg: "Successfully updated the users." })
+    try {
+        await interestsRepository.insert(added.map((i) => ({
+            user_id: i,
+            home_id
+        })))
+        await interestsRepository.delete(removed.map((i) => ({
+            user_id: i,
+            home_id
+        })))
+        res.json({ msg: "Successfully updated the users." })
+    } catch (err) {
+        res.status(500).json({ msg: "Error occurred while updating data." })
+    }
 }
 
 module.exports = {
